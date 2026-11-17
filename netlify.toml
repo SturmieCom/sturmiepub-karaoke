@@ -2,3 +2,8 @@
 [build]
   publish = "public"
   functions = "netlify/functions"
+
+# The KJ password is never stored in this repo. Netlify's secret scanner flags it
+# whenever the password happens to match text in the song list, so skip that key.
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "KJ_PASSWORD"
