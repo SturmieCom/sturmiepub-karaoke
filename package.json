@@ -1,0 +1,8 @@
+{
+  "name": "sturmie-karaoke",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@netlify/blobs": "latest"
+  }
+}

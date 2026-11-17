@@ -1,0 +1,4 @@
+# Sturmie.pub Karaoke - public song list + request queue
+[build]
+  publish = "public"
+  functions = "netlify/functions"
