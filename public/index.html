@@ -473,7 +473,7 @@ function openDetail(s){
     h += `<div class="ver"><div class="vh"><span><span class="badge ${v.issue?'bad':''}">${esc(v.brand||'?')}</span> ${esc(BRAND_NAMES[brandOf(v.brand)]||'')}${v.disc?' · '+esc(v.disc):''}</span></div>`;
     const target = v.files.find(f=>/\.mp3$/i.test(f.name)) || v.files[0];
     if (QMODE === 'public' && queue !== null && qOpen){
-      h += `<div class="vbtns"><button class="vbtn play" data-req="${esc(JSON.stringify({artist:s.artist,title:s.title,vendor:v.brand==='UNTAGGED'?'':v.brand}))}">🎤 Request this version</button></div>`;
+      h += `<div class="vbtns"><button class="vbtn play" data-req="${esc(JSON.stringify({artist:s.artist,title:s.title,vendor:v.brand==='UNTAGGED'?'':v.brand}))}">🎤 Request This Version</button></div>`;
     }
     if (target && QMODE !== 'public'){
       const ap = absPath(v.folder, target.name);
@@ -545,7 +545,7 @@ function renderQueue(){
   if (QMODE === 'kj' && !kjPw()){
     h += `<div class="sub">Enter the KJ password to manage the queue:</div><div class="qkj"><input id="kjPw" type="password" placeholder="KJ password"><button class="btn primary" id="kjSave">Save</button></div>`;
   }
-  if (QMODE === 'public') h += `<div class="sub">${qOpen ? 'Find a song and tap <b>🎤 Request this version</b> to join the queue.' : 'The KJ has paused requests for now.'}</div>`;
+  if (QMODE === 'public') h += `<div class="sub">${qOpen ? 'Find a song and tap <b>🎤 Request This Version</b> to join the queue.' : 'The KJ has paused requests for now.'}</div>`;
   if (!queue.length) h += `<div class="qempty">The queue is empty${qOpen && QMODE==='public' ? ' — be the first!' : '.'}</div>`;
   let n = 0;
   for (const it of queue){
