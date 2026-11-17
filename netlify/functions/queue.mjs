@@ -8,8 +8,8 @@
 import { getStore } from "@netlify/blobs";
 import { createHash, timingSafeEqual } from "node:crypto";
 
-const MAX_WAITING = 60;            // most songs that can wait in the queue
-const MAX_PER_NAME = 2;            // a singer can have at most 2 songs waiting
+const MAX_WAITING = 20;            // most songs that can wait in the queue
+const MAX_PER_NAME = 5;            // a singer can have at most 5 songs waiting
 
 const CORS = {
   "access-control-allow-origin": "*",
