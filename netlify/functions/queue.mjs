@@ -9,7 +9,6 @@ import { getStore } from "@netlify/blobs";
 import { createHash, timingSafeEqual } from "node:crypto";
 
 const MAX_WAITING = 60;            // most songs that can wait in the queue
-const PER_PERSON_SECONDS = 180;    // one request per device every 3 minutes
 const MAX_PER_NAME = 2;            // a singer can have at most 2 songs waiting
 
 const CORS = {
@@ -75,17 +74,10 @@ export default async (req, context) => {
     if (items.some((i) => i.artist.toLowerCase() === artist.toLowerCase() && i.title.toLowerCase() === title.toLowerCase()))
       return json({ error: "That song is already in the queue." }, 409);
 
-    const who = createHash("sha256").update(String(context?.ip || "unknown")).digest("hex").slice(0, 24);
-    const last = await s.get(`rl/${who}`, { type: "json" });
     const now = Date.now();
-    if (last && now - last.ts < PER_PERSON_SECONDS * 1000) {
-      const wait = Math.ceil((PER_PERSON_SECONDS * 1000 - (now - last.ts)) / 60000);
-      return json({ error: `Please wait about ${wait} minute${wait > 1 ? "s" : ""} before requesting another song.` }, 429);
-    }
     const id = now.toString(36).padStart(9, "0") + "-" + Math.random().toString(36).slice(2, 8);
     const item = { id, name, artist, title, vendor, ts: now, order: now, status: "waiting" };
     await s.setJSON(`q/${id}`, item);
-    await s.setJSON(`rl/${who}`, { ts: now });
     const position = (await readQueue(s)).filter((i) => i.status !== "up").findIndex((i) => i.id === id) + 1;
     return json({ ok: true, item: { id, name, artist, title, vendor }, position });
   }
